@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg-base: #13141a;
+  --bg-card: #1c1d25;
+  --bg-elevated: #252630;
+  --border: #2d2e3a;
+  --border-muted: #3a3b48;
+  --text-primary: #dddfe4;
+  --text-secondary: #7e8088;
+  --text-muted: #5a5c66;
+  --brand: #b1361e;
+  --brand-dark: #991b1b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #13141a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3b48;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4b58;
+}
+
+/* Code / mono elements */
+code,
+pre {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+/* Focus visible ring */
+*:focus-visible {
+  outline: 2px solid #b1361e;
+  outline-offset: 2px;
+}
+
+/* Utility layer additions */
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #f87171, #b1361e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

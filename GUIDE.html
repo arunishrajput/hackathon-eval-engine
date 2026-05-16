@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVALON — Beginner's Complete Guide</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --card: #111111;
+    --card2: #1a1a1a;
+    --border: #2a2a2a;
+    --blue: #3b82f6;
+    --blue-light: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --green: #22c55e;
+    --green-dim: #14532d;
+    --yellow: #eab308;
+    --yellow-dim: #422006;
+    --red: #ef4444;
+    --red-dim: #450a0a;
+    --purple: #a855f7;
+    --purple-dim: #3b0764;
+    --text: #e5e7eb;
+    --text-dim: #9ca3af;
+    --text-dimmer: #4b5563;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── LAYOUT ── */
+  .layout { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 0;
+  }
+
+  .sidebar-logo {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .sidebar-logo h1 {
+    font-size: 22px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #3b82f6, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .sidebar-logo p { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+
+  .nav-section { padding: 0 12px; margin-bottom: 8px; }
+  .nav-section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dimmer);
+    padding: 8px 8px 4px;
+  }
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 6px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .nav-link:hover { background: var(--card2); color: var(--text); }
+  .nav-link.active { background: var(--blue-dim); color: var(--blue-light); }
+  .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  .main { flex: 1; overflow-y: auto; }
+  .content { max-width: 860px; margin: 0 auto; padding: 40px 32px 80px; }
+
+  /* ── TYPOGRAPHY ── */
+  h1 { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 12px; }
+  h2 { font-size: 26px; font-weight: 700; margin-top: 56px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 18px; font-weight: 600; margin-top: 32px; margin-bottom: 12px; color: var(--blue-light); }
+  h4 { font-size: 15px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; color: var(--text); }
+  p { margin-bottom: 14px; color: var(--text); }
+  a { color: var(--blue-light); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; color: var(--text); }
+  strong { color: #fff; font-weight: 600; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1b2e 0%, #0a0a0a 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 48px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-dim);
+    color: var(--blue-light);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 40px;
+    background: linear-gradient(135deg, #fff 0%, #9ca3af 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p { font-size: 17px; color: var(--text-dim); max-width: 560px; }
+
+  /* ── STEP CARDS ── */
+  .steps { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+  .step {
+    display: flex;
+    gap: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: rgba(59,130,246,0.4); }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue-dim);
+    border: 2px solid var(--blue);
+    color: var(--blue-light);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-body h4 { margin-top: 0; }
+  .step-body p { margin-bottom: 8px; font-size: 14px; color: var(--text-dim); }
+
+  /* ── CODE BLOCKS ── */
+  .code-block {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #161b22;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+  .copy-btn {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--mono);
+  }
+  .copy-btn:hover { background: var(--blue-dim); color: var(--blue-light); border-color: var(--blue); }
+  .copy-btn.copied { background: var(--green-dim); color: var(--green); border-color: var(--green); }
+  pre {
+    padding: 20px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #e6edf3;
+  }
+  .cmd { color: #79c0ff; }
+  .comment { color: #8b949e; font-style: italic; }
+  .str { color: #a5d6ff; }
+  .key { color: #ff7b72; }
+
+  /* ── CALLOUT BOXES ── */
+  .callout {
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-left: 4px solid;
+    display: flex;
+    gap: 12px;
+  }
+  .callout-icon { font-size: 20px; flex-shrink: 0; line-height: 1.5; }
+  .callout-body { flex: 1; }
+  .callout-body strong { display: block; margin-bottom: 4px; }
+  .callout-body p { margin: 0; font-size: 14px; }
+  .callout.info { background: rgba(59,130,246,0.08); border-color: var(--blue); }
+  .callout.info .callout-icon { color: var(--blue-light); }
+  .callout.success { background: rgba(34,197,94,0.08); border-color: var(--green); }
+  .callout.success .callout-icon { color: var(--green); }
+  .callout.warning { background: rgba(234,179,8,0.08); border-color: var(--yellow); }
+  .callout.warning .callout-icon { color: var(--yellow); }
+  .callout.danger { background: rgba(239,68,68,0.08); border-color: var(--red); }
+  .callout.danger .callout-icon { color: var(--red); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .card-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .mini-card-icon { font-size: 24px; margin-bottom: 8px; }
+  .mini-card h4 { margin-top: 0; margin-bottom: 4px; font-size: 14px; }
+  .mini-card p { font-size: 13px; color: var(--text-dim); margin: 0; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  th {
+    background: var(--card2);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    border-bottom: 2px solid var(--border);
+  }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-blue { background: var(--blue-dim); color: var(--blue-light); }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-yellow { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-purple { background: var(--purple-dim); color: var(--purple); }
+
+  /* ── DIAGRAM ── */
+  .diagram {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 24px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .d-box {
+    display: inline-block;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: var(--text);
+  }
+  .d-blue { border-color: var(--blue); background: var(--blue-dim); color: var(--blue-light); }
+  .d-green { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+  .d-purple { border-color: var(--purple); background: var(--purple-dim); color: var(--purple); }
+  .d-yellow { border-color: var(--yellow); background: var(--yellow-dim); color: var(--yellow); }
+  .d-arrow { color: var(--text-dimmer); padding: 0 8px; }
+
+  /* ── TIMELINE ── */
+  .timeline { padding-left: 24px; border-left: 2px solid var(--border); margin: 24px 0; }
+  .timeline-item { position: relative; padding: 0 0 28px 24px; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 3px solid var(--bg);
+  }
+  .timeline-item.done::before { background: var(--green); }
+  .timeline-label { font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .timeline-desc { font-size: 13.5px; color: var(--text-dim); }
+
+  /* ── SECTION ANCHORS ── */
+  section { scroll-margin-top: 20px; }
+
+  /* ── DIVIDER ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ── URL BAR ── */
+  .url-bar {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue-light);
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .url-bar::before { content: '🌐'; font-size: 14px; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-demo {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+  }
+  .progress-stage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .stage-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .stage-done { background: var(--green-dim); color: var(--green); }
+  .stage-active { background: var(--blue-dim); color: var(--blue); animation: pulse 1.5s infinite; }
+  .stage-wait { background: var(--card2); color: var(--text-dimmer); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  .stage-bar { flex:1; height: 3px; background: var(--border); border-radius: 2px; }
+  .stage-bar-fill { height: 100%; background: var(--green); border-radius: 2px; }
+
+  /* ── ACCOUNT CARD ── */
+  .account-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .account-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .account-card h4 { margin-top: 0; display: flex; align-items: center; gap: 8px; }
+  .account-detail { font-family: var(--mono); font-size: 13px; color: var(--text-dim); margin: 6px 0; }
+  .account-detail strong { color: var(--text); }
+
+  /* ── TOC PROGRESS ── */
+  .toc-progress {
+    height: 2px;
+    background: var(--blue);
+    position: fixed;
+    top: 0; left: 0;
+    width: 0%;
+    transition: width 0.1s;
+    z-index: 100;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .card-grid { grid-template-columns: 1fr; }
+    .account-cards { grid-template-columns: 1fr; }
+    .content { padding: 24px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toc-progress" id="progress"></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <h1>EVALON</h1>
+      <p>Beginner's Complete Guide</p>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Getting Started</div>
+      <a class="nav-link" href="#what-is-it"><span class="nav-dot" style="background:#3b82f6"></span>What is EVALON?</a>
+      <a class="nav-link" href="#how-it-works"><span class="nav-dot" style="background:#a855f7"></span>How it Works</a>
+      <a class="nav-link" href="#prerequisites"><span class="nav-dot" style="background:#22c55e"></span>Prerequisites</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Setup</div>
+      <a class="nav-link" href="#step1"><span class="nav-dot" style="background:#eab308"></span>Step 1: Get the Code</a>
+      <a class="nav-link" href="#step2"><span class="nav-dot" style="background:#eab308"></span>Step 2: Configure .env</a>
+      <a class="nav-link" href="#step3"><span class="nav-dot" style="background:#eab308"></span>Step 3: Start Services</a>
+      <a class="nav-link" href="#step4"><span class="nav-dot" style="background:#eab308"></span>Step 4: Setup Database</a>
+      <a class="nav-link" href="#step5"><span class="nav-dot" style="background:#eab308"></span>Step 5: Create Demo Data</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Demo Walkthrough</div>
+      <a class="nav-link" href="#demo-admin"><span class="nav-dot" style="background:#a855f7"></span>Admin: Create Hackathon</a>
+      <a class="nav-link" href="#demo-participant"><span class="nav-dot" style="background:#22c55e"></span>Participant: Submit Repo</a>
+      <a class="nav-link" href="#demo-evaluation"><span class="nav-dot" style="background:#3b82f6"></span>Watch Evaluation</a>
+      <a class="nav-link" href="#demo-report"><span class="nav-dot" style="background:#f97316"></span>Read the Report</a>
+      <a class="nav-link" href="#demo-mentor"><span class="nav-dot" style="background:#ec4899"></span>Mentor Chatbot</a>
+      <a class="nav-link" href="#demo-leaderboard"><span class="nav-dot" style="background:#22c55e"></span>Leaderboard</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">Understanding It</div>
+      <a class="nav-link" href="#architecture"><span class="nav-dot" style="background:#6366f1"></span>Architecture</a>
+      <a class="nav-link" href="#ai-agents"><span class="nav-dot" style="background:#06b6d4"></span>AI Agents Explained</a>
+      <a class="nav-link" href="#troubleshoot"><span class="nav-dot" style="background:#ef4444"></span>Troubleshooting</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main" id="main">
+    <div class="content">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-badge">📖 Beginner's Complete Guide · v1.0</div>
+        <h1>Understanding & Running EVALON</h1>
+        <p>A step-by-step guide to set up, run, and demo the AI-powered hackathon evaluation engine — no prior experience needed.</p>
+      </div>
+
+      <!-- ── SECTION 1: WHAT IS IT ── -->
+      <section id="what-is-it">
+        <h2>🤔 What is EVALON?</h2>
+
+        <p>Imagine you're running a coding competition (hackathon) with 50 participants. Each person submits a GitHub link to their project. Normally, a panel of judges would have to manually look at every project, read the code, and give scores. That takes days and is very inconsistent.</p>
+
+        <p><strong>EVALON automates this entire process.</strong> You give it a GitHub link, and within ~3 minutes it:</p>
+
+        <div class="card-grid">
+          <div class="mini-card">
+            <div class="mini-card-icon">📥</div>
+            <h4>Downloads the code</h4>
+            <p>Clones the GitHub repository to analyze it safely</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">🔬</div>
+            <h4>Analyzes it</h4>
+            <p>Measures code complexity, style, documentation quality</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">🤖</div>
+            <h4>AI reviews it</h4>
+            <p>3 specialized AI agents evaluate different aspects</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">📊</div>
+            <h4>Generates a report</h4>
+            <p>Detailed scorecard with specific evidence and feedback</p>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <strong>Key principle</strong>
+            <p>EVALON never just makes up scores. Every number comes from real code measurements. The AI only <em>interprets</em> those measurements — it doesn't invent them.</p>
+          </div>
+        </div>
+
+        <h3>Who uses it?</h3>
+        <table>
+          <tr>
+            <th>Role</th>
+            <th>What they do</th>
+            <th>What they see</th>
+          </tr>
+          <tr>
+            <td><span class="badge badge-purple">Admin</span></td>
+            <td>Creates hackathons, sets judging criteria, finalizes rankings</td>
+            <td>All submissions, all scores, admin dashboard</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">Participant</span></td>
+            <td>Joins hackathons, submits GitHub repos, chats with AI mentor</td>
+            <td>Their own evaluation report, leaderboard (after finalization)</td>
+          </tr>
+        </table>
+      </section>
+
+      <!-- ── SECTION 2: HOW IT WORKS ── -->
+      <section id="how-it-works">
+        <h2>⚙️ How It Works (Simple Version)</h2>
+
+        <p>Think of EVALON as a factory with different stations. When you submit a GitHub link, it goes through these stations one by one:</p>
+
+        <div class="timeline">
+          <div class="timeline-item done">
+            <div class="timeline-label">🔗 Stage 1: Clone Repository</div>
+            <div class="timeline-desc">Downloads your GitHub project to a temporary folder. Like pressing "Download ZIP" but automatic.</div>
+          </div>
+          <div class="timeline-item done">
+            <div class="timeline-label">📁 Stage 2: Analyze Files</div>
+            <div class="timeline-desc">Counts files, detects programming languages, reads README, measures code complexity using specialized tools (radon, ESLint).</div>
+          </div>
+          <div class="timeline-item done">
+            <div class="timeline-label">🤖 Stage 3: AI Evaluation (3 agents)</div>
+            <div class="timeline-desc">
+              Three different AI personas each evaluate one thing:<br>
+              • <strong>Agent 1</strong>: "What is this project? Is it well explained?"<br>
+              • <strong>Agent 2</strong>: "Is the code written well? Any bad patterns?"<br>
+              • <strong>Agent 3</strong>: "Is this idea creative? Is the solution impressive?"
+            </div>
+          </div>
+          <div class="timeline-item done">
+            <div class="timeline-label">📊 Stage 4: Score & Report</div>
+            <div class="timeline-desc">Combines all agent scores using the weights you set (e.g., Code Quality = 40%, Innovation = 35%). Generates a detailed written report.</div>
+          </div>
+          <div class="timeline-item done">
+            <div class="timeline-label">🧠 Stage 5: Build Memory (Embeddings)</div>
+            <div class="timeline-desc">Creates a searchable "memory" of the project so the AI Mentor chatbot can answer specific questions about the code.</div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon">🔒</div>
+          <div class="callout-body">
+            <strong>Important: No code is ever executed</strong>
+            <p>EVALON only reads files as text. It never runs your code, npm install, pip install, or any scripts. It's completely safe.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SECTION 3: PREREQUISITES ── -->
+      <section id="prerequisites">
+        <h2>✅ Prerequisites — What You Need First</h2>
+
+        <p>Before you can run EVALON, you need two things installed on your computer:</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Docker Desktop</h4>
+              <p>Docker is a tool that runs software in isolated containers — like having a mini-computer inside your computer. EVALON uses it to run the database, AI models, and web server without you needing to install anything manually.</p>
+              <p>Download from: <strong>docker.com/products/docker-desktop</strong> (free)</p>
+              <p>After installing, make sure Docker is <em>running</em> (you'll see the whale icon in your menu bar on Mac).</p>
+              <div class="callout warning">
+                <div class="callout-icon">⚠️</div>
+                <div class="callout-body">
+                  <strong>Memory requirement</strong>
+                  <p>Open Docker Desktop → Settings → Resources → set Memory to at least <strong>8 GB</strong>. The AI models need this space.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Terminal (Command Line)</h4>
+              <p>You'll type a few commands. On Mac: open <strong>Terminal</strong> (search in Spotlight). On Windows: open <strong>PowerShell</strong> or install Windows Terminal.</p>
+              <p>Don't worry — there are only about 5 commands total, and they're all provided below.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>System Requirements</h3>
+        <table>
+          <tr><th>Item</th><th>Minimum</th><th>Recommended</th></tr>
+          <tr><td>RAM</td><td>8 GB</td><td>16 GB</td></tr>
+          <tr><td>Disk Space</td><td>15 GB free</td><td>20 GB free</td></tr>
+          <tr><td>Internet</td><td>Required for initial setup (~5 GB download)</td><td>—</td></tr>
+          <tr><td>GPU</td><td>Not required (CPU works)</td><td>NVIDIA GPU (much faster)</td></tr>
+        </table>
+
+        <div class="callout success">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body">
+            <strong>Check if Docker is working</strong>
+            <p>Open Terminal and type: <code style="font-family:monospace;background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px">docker --version</code> — if it shows a version number, you're ready.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ── SETUP STEPS ── -->
+      <section id="step1">
+        <h2>📂 Step 1: You Already Have the Code</h2>
+
+        <p>Good news — the project is already on your computer at:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">your project location</span>
+          </div>
+          <pre>/Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine</pre>
+        </div>
+
+        <p>Open your Terminal and navigate there:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'cd /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine')">Copy</button>
+          </div>
+          <pre><span class="cmd">cd</span> /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine</pre>
+        </div>
+
+        <p>Then verify you're in the right place:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'ls')">Copy</button>
+          </div>
+          <pre><span class="cmd">ls</span>
+<span class="comment"># You should see: docker-compose.yml  backend/  frontend/  README.md  Makefile ...</span></pre>
+        </div>
+      </section>
+
+      <section id="step2">
+        <h2>🔑 Step 2: Configure the .env File</h2>
+
+        <p>The <code>.env</code> file stores secret settings like passwords and API keys. There's already a template called <code>.env.example</code>. You need to copy it and change one important value.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Copy the template</h4>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-label">Terminal</span>
+                  <button class="copy-btn" onclick="copyCode(this, 'cp .env.example .env')">Copy</button>
+                </div>
+                <pre><span class="cmd">cp</span> .env.example .env</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Edit the SECRET_KEY</h4>
+              <p>Open the <code>.env</code> file in any text editor (TextEdit on Mac, Notepad on Windows). Find line 12 which says:</p>
+              <div class="code-block">
+                <div class="code-header"><span class="code-label">.env — line 12 (before)</span></div>
+                <pre><span class="key">SECRET_KEY</span>=your-super-secret-jwt-key-change-in-production-min-32-chars</pre>
+              </div>
+              <p>Change it to something random and at least 32 characters. You can use this example:</p>
+              <div class="code-block">
+                <div class="code-header">
+                  <span class="code-label">.env — line 12 (after)</span>
+                  <button class="copy-btn" onclick="copyCode(this, 'SECRET_KEY=myevalon2025supersecretkey123456789xyzabc')">Copy</button>
+                </div>
+                <pre><span class="key">SECRET_KEY</span>=myevalon2025supersecretkey123456789xyzabc</pre>
+              </div>
+              <div class="callout warning">
+                <div class="callout-icon">⚠️</div>
+                <div class="callout-body">
+                  <strong>Why does this matter?</strong>
+                  <p>The SECRET_KEY is used to sign login tokens. If you leave the default value, the app will still work for demo purposes — but never use a default secret in a real deployment.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p>Everything else in <code>.env</code> can stay as default for local development.</p>
+      </section>
+
+      <section id="step3">
+        <h2>🚀 Step 3: Start All Services</h2>
+
+        <p>One command starts everything — the database, the AI engine, the web server, and the frontend:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal — run this once</span>
+            <button class="copy-btn" onclick="copyCode(this, 'make up')">Copy</button>
+          </div>
+          <pre><span class="cmd">make up</span>
+<span class="comment"># Or if make doesn't work:</span>
+<span class="cmd">docker compose up -d</span></pre>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-icon">⏳</div>
+          <div class="callout-body">
+            <strong>First time takes 10–20 minutes</strong>
+            <p>Docker needs to download the AI models (about 5 GB total). This only happens once. Subsequent starts take under 30 seconds.</p>
+          </div>
+        </div>
+
+        <h3>What's happening behind the scenes?</h3>
+
+        <p>Docker starts 7 mini-computers (called "containers"), each running one part of EVALON:</p>
+
+        <table>
+          <tr>
+            <th>Container</th>
+            <th>What it does</th>
+            <th>Like...</th>
+          </tr>
+          <tr>
+            <td><code>hackeval_postgres</code></td>
+            <td>Stores all data (users, hackathons, scores)</td>
+            <td>A filing cabinet</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_redis</code></td>
+            <td>Manages the job queue and real-time events</td>
+            <td>A post office</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_ollama</code></td>
+            <td>Runs the AI language models locally</td>
+            <td>The AI brain</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_backend</code></td>
+            <td>The main API server (handles all requests)</td>
+            <td>The manager</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_worker</code></td>
+            <td>Runs evaluation jobs in the background</td>
+            <td>The lab assistant</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_frontend</code></td>
+            <td>The website you see in the browser</td>
+            <td>The storefront</td>
+          </tr>
+          <tr>
+            <td><code>hackeval_nginx</code></td>
+            <td>Routes traffic to the right container</td>
+            <td>A receptionist</td>
+          </tr>
+        </table>
+
+        <h3>Check that everything started</h3>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose ps')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose ps</span>
+<span class="comment"># You should see all 7 containers with "running" or "healthy" status</span></pre>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-icon">✅</div>
+          <div class="callout-body">
+            <strong>Quick health check</strong>
+            <p>Open your browser and go to <strong>http://localhost/api/health</strong> — if you see <code>{"status":"healthy"...}</code> all systems are up.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="step4">
+        <h2>🗄️ Step 4: Set Up the Database</h2>
+
+        <p>The database container is running but it has no tables yet. Run the migration command to create all the tables:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'make migrate')">Copy</button>
+          </div>
+          <pre><span class="cmd">make migrate</span>
+<span class="comment"># This runs: docker compose exec backend alembic upgrade head</span>
+<span class="comment"># You'll see output like: "Running upgrade -> 001, Initial schema"</span></pre>
+        </div>
+
+        <p>This creates 10 database tables: users, hackathons, criteria, submissions, evaluations, agent results, rankings, chat sessions, messages, and embedding storage.</p>
+      </section>
+
+      <section id="step5">
+        <h2>🌱 Step 5: Create Demo Data</h2>
+
+        <p>Now create some starter accounts and a demo hackathon:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'make seed')">Copy</button>
+          </div>
+          <pre><span class="cmd">make seed</span>
+<span class="comment"># Creates: admin account, participant account, "AI Hackathon 2025" with 3 criteria</span></pre>
+        </div>
+
+        <p>After this runs, you'll have:</p>
+
+        <div class="account-cards">
+          <div class="account-card">
+            <h4>🔑 <span class="badge badge-purple">Admin Account</span></h4>
+            <div class="account-detail">Email: <strong>admin@hackeval.dev</strong></div>
+            <div class="account-detail">Password: <strong>admin123</strong></div>
+            <div class="account-detail">Can: create hackathons, view all submissions, finalize rankings</div>
+          </div>
+          <div class="account-card">
+            <h4>👤 <span class="badge badge-green">Participant Account</span></h4>
+            <div class="account-detail">Email: <strong>participant@hackeval.dev</strong></div>
+            <div class="account-detail">Password: <strong>test123</strong></div>
+            <div class="account-detail">Can: join hackathons, submit GitHub repos, chat with mentor</div>
+          </div>
+        </div>
+
+        <p>And a hackathon called <strong>"AI Hackathon 2025"</strong> with these judging criteria:</p>
+
+        <table>
+          <tr><th>Criterion</th><th>Weight</th><th>What it evaluates</th></tr>
+          <tr><td>Code Quality</td><td><span class="badge badge-blue">40%</span></td><td>Is the code well-written, maintainable, documented?</td></tr>
+          <tr><td>Innovation</td><td><span class="badge badge-purple">35%</span></td><td>Is the idea creative? Is the technical approach impressive?</td></tr>
+          <tr><td>Project Understanding</td><td><span class="badge badge-green">25%</span></td><td>Is the purpose clear? Is the README good?</td></tr>
+        </table>
+
+        <div class="callout success">
+          <div class="callout-icon">🎉</div>
+          <div class="callout-body">
+            <strong>You're ready!</strong>
+            <p>Open your browser and go to <strong>http://localhost</strong> — you should see the EVALON landing page.</p>
+          </div>
+        </div>
+
+        <div class="url-bar">http://localhost</div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ── DEMO WALKTHROUGH ── -->
+      <section id="demo-admin">
+        <h2>🎬 Demo: Admin Creates a Hackathon</h2>
+
+        <p>Let's walk through the complete demo from start to finish. First, log in as the admin.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Go to the login page</h4>
+              <div class="url-bar">http://localhost/auth/login</div>
+              <p>Enter email: <code>admin@hackeval.dev</code> and password: <code>admin123</code></p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>You land on the Admin Dashboard</h4>
+              <div class="url-bar">http://localhost/admin</div>
+              <p>You'll see "AI Hackathon 2025" already created (from the seed). Click on it to see the management page.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Explore the hackathon overview</h4>
+              <p>You can see: the hackathon status (<span class="badge badge-green">Active</span>), submission count, and criteria. The table is empty because no one has submitted yet.</p>
+              <p>Buttons you'll see:</p>
+              <ul>
+                <li><strong>→ Evaluating</strong> — transition the hackathon to evaluation mode</li>
+                <li><strong>Finalize Rankings</strong> — makes rankings visible to participants (only shown when all evaluations complete)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <strong>Want to create your own hackathon?</strong>
+            <p>Click "New Hackathon" on the admin page. You can set custom criteria with custom weights — just make sure they add up to 1.0 (100%).</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo-participant">
+        <h2>👤 Demo: Participant Submits a Repo</h2>
+
+        <p>Now open a new browser tab (or incognito window) and log in as the participant.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Log in as participant</h4>
+              <div class="url-bar">http://localhost/auth/login</div>
+              <p>Email: <code>participant@hackeval.dev</code> / Password: <code>test123</code></p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Browse hackathons and join</h4>
+              <div class="url-bar">http://localhost/participant/hackathons</div>
+              <p>Click on "AI Hackathon 2025" and press <strong>Join</strong>. You're now enrolled.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Submit a GitHub repository</h4>
+              <p>Click <strong>Submit</strong> on the hackathon card. In the URL field, paste one of these real public repos:</p>
+
+              <div class="card">
+                <h4>🌟 Suggested Demo Repositories</h4>
+                <table>
+                  <tr>
+                    <th>Repository</th>
+                    <th>Why it's good for demo</th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="code-block" style="margin:4px 0">
+                        <div class="code-header">
+                          <span class="code-label">paste this URL</span>
+                          <button class="copy-btn" onclick="copyCode(this, 'https://github.com/tiangolo/fastapi')">Copy</button>
+                        </div>
+                        <pre style="padding:8px 16px">https://github.com/tiangolo/fastapi</pre>
+                      </div>
+                    </td>
+                    <td>Well-documented Python project, produces great code quality scores</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="code-block" style="margin:4px 0">
+                        <div class="code-header">
+                          <span class="code-label">paste this URL</span>
+                          <button class="copy-btn" onclick="copyCode(this, 'https://github.com/pallets/flask')">Copy</button>
+                        </div>
+                        <pre style="padding:8px 16px">https://github.com/pallets/flask</pre>
+                      </div>
+                    </td>
+                    <td>Classic Python web framework, interesting complexity patterns</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="code-block" style="margin:4px 0">
+                        <div class="code-header">
+                          <span class="code-label">paste this URL</span>
+                          <button class="copy-btn" onclick="copyCode(this, 'https://github.com/fastapi/typer')">Copy</button>
+                        </div>
+                        <pre style="padding:8px 16px">https://github.com/fastapi/typer</pre>
+                      </div>
+                    </td>
+                    <td>CLI tool — shows how EVALON handles different project types</td>
+                  </tr>
+                </table>
+              </div>
+
+              <p>Click <strong>Submit Repository</strong>. The system validates the URL and starts the evaluation process automatically.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo-evaluation">
+        <h2>📡 Demo: Watch the Evaluation in Real-Time</h2>
+
+        <p>After submitting, you're taken to the evaluation page. This is the most exciting part — you can watch the AI working in real-time.</p>
+
+        <div class="url-bar">http://localhost/participant/evaluation/[submission-id]</div>
+
+        <p>You'll see a live progress stream that looks like this:</p>
+
+        <div class="progress-demo">
+          <div class="progress-stage">
+            <div class="stage-icon stage-done">✓</div>
+            <span><strong>Cloning Repository</strong> — Downloading the GitHub project</span>
+            <div class="stage-bar"><div class="stage-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="progress-stage">
+            <div class="stage-icon stage-done">✓</div>
+            <span><strong>Analyzing Files</strong> — Detecting languages, measuring complexity</span>
+            <div class="stage-bar"><div class="stage-bar-fill" style="width:100%"></div></div>
+          </div>
+          <div class="progress-stage">
+            <div class="stage-icon stage-active">●</div>
+            <span><strong>Evaluating</strong> — AI agents reviewing the code right now...</span>
+            <div class="stage-bar"><div class="stage-bar-fill" style="width:55%"></div></div>
+          </div>
+          <div class="progress-stage">
+            <div class="stage-icon stage-wait">○</div>
+            <span style="color:#4b5563"><strong>Scoring</strong> — Waiting for agents to finish</span>
+            <div class="stage-bar"></div>
+          </div>
+          <div class="progress-stage">
+            <div class="stage-icon stage-wait">○</div>
+            <span style="color:#4b5563"><strong>Complete</strong> — Report will appear here</span>
+            <div class="stage-bar"></div>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon">⏱️</div>
+          <div class="callout-body">
+            <strong>How long does it take?</strong>
+            <p>Typically <strong>2–4 minutes</strong> for a small/medium repository. The AI models (running locally on your machine) need time to process each file. If you have a GPU, this is significantly faster.</p>
+          </div>
+        </div>
+
+        <h3>What's happening during evaluation?</h3>
+
+        <table>
+          <tr><th>Stage</th><th>What the computer is doing</th><th>~Time</th></tr>
+          <tr><td>Cloning</td><td>Running <code>git clone</code> to download the repo</td><td>5–30 sec</td></tr>
+          <tr><td>Analyzing</td><td>Reading all files, running radon/ESLint measurements</td><td>10–30 sec</td></tr>
+          <tr><td>Evaluating</td><td>Sending files to Ollama AI models (3 separate calls)</td><td>1–3 min</td></tr>
+          <tr><td>Scoring</td><td>Combining scores, generating the final report</td><td>5 sec</td></tr>
+          <tr><td>Embedding</td><td>Creating searchable memory for the mentor chatbot</td><td>15–30 sec</td></tr>
+        </table>
+      </section>
+
+      <section id="demo-report">
+        <h2>📋 Demo: Reading the Evaluation Report</h2>
+
+        <p>When evaluation completes, the progress stream is replaced by a full evaluation report. Let's understand each section:</p>
+
+        <h3>1. The Score Card</h3>
+        <p>At the top you'll see a big number like <strong>7.4 / 10</strong> with a grade (e.g., B+). This is the weighted final score across all criteria.</p>
+
+        <h3>2. The Radar Chart</h3>
+        <p>A spider-web style chart showing scores across each judging criterion. Helps you see at a glance what areas are strong vs. weak.</p>
+
+        <h3>3. Report Tabs</h3>
+
+        <div class="card-grid">
+          <div class="mini-card">
+            <div class="mini-card-icon">📝</div>
+            <h4>Overview Tab</h4>
+            <p>Summary paragraph, overall assessment, top 3 strengths, top 3 weaknesses</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">🤖</div>
+            <h4>Agent Details Tab</h4>
+            <p>Deep dive into each AI agent's findings, with specific evidence items referencing actual file names</p>
+          </div>
+          <div class="mini-card">
+            <div class="mini-card-icon">💡</div>
+            <h4>Recommendations Tab</h4>
+            <p>Prioritized action items (High/Medium/Low) to improve the project</p>
+          </div>
+        </div>
+
+        <h3>Understanding Evidence Items</h3>
+
+        <p>Each AI finding shows <em>exactly</em> what it found. For example:</p>
+
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span class="badge badge-red">HIGH IMPACT</span>
+            <strong>12 functions with cyclomatic complexity > 10</strong>
+          </div>
+          <p style="font-size:14px;color:var(--text-dim);margin:0">📁 Found in: <code>app/routers/users.py</code>, <code>app/services/auth.py</code>, <code>app/utils/validators.py</code></p>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-icon">🎯</div>
+          <div class="callout-body">
+            <strong>This is what makes EVALON different</strong>
+            <p>It doesn't just say "code quality is poor." It says exactly <em>which</em> functions are too complex, and shows you the file. You know exactly what to fix.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo-mentor">
+        <h2>💬 Demo: AI Mentor Chatbot</h2>
+
+        <p>After evaluation, you can chat with an AI mentor about your specific code. This is not a generic chatbot — it knows your project.</p>
+
+        <div class="url-bar">http://localhost/participant/mentor/[submission-id]</div>
+
+        <p>The page has two panels:</p>
+        <ul>
+          <li><strong>Left panel</strong>: Your evaluation summary (score, key strengths/weaknesses)</li>
+          <li><strong>Right panel</strong>: The chat interface</li>
+        </ul>
+
+        <h3>Suggested Starter Questions</h3>
+
+        <div class="card-grid">
+          <div class="mini-card">
+            <h4>"Why did I score low on Code Quality?"</h4>
+            <p>The AI will reference the actual radon metrics and file names from your code</p>
+          </div>
+          <div class="mini-card">
+            <h4>"How can I improve my README?"</h4>
+            <p>Gets specific feedback based on what sections are missing in your actual README</p>
+          </div>
+          <div class="mini-card">
+            <h4>"What did the Innovation agent think of my approach?"</h4>
+            <p>Full breakdown of the innovation scoring reasoning</p>
+          </div>
+          <div class="mini-card">
+            <h4>"Which function should I refactor first?"</h4>
+            <p>Based on the complexity analysis of your actual code</p>
+          </div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-icon">🧠</div>
+          <div class="callout-body">
+            <strong>How the chatbot knows your code</strong>
+            <p>During evaluation, EVALON created a "memory" of your project by converting chunks of code and the evaluation report into mathematical vectors (called embeddings) stored in the database. When you ask a question, it finds the most relevant pieces of your code to include in the AI's context.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo-leaderboard">
+        <h2>🏆 Demo: Admin Finalizes — Leaderboard Appears</h2>
+
+        <p>Rankings exist internally as soon as the first evaluation completes, but participants can't see them until an admin finalizes. This lets the admin review everything first.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h4>Admin: Go to the hackathon rankings page</h4>
+              <div class="url-bar">http://localhost/admin/hackathons/[id]/rankings</div>
+              <p>You can see all rankings before participants can. There's also a <strong>Export CSV</strong> button to download the full results.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h4>Admin: Click "Finalize Rankings"</h4>
+              <p>This unlocks the leaderboard for participants. The hackathon status changes to <span class="badge badge-blue">Finalized</span>.</p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h4>Participant: View the leaderboard</h4>
+              <div class="url-bar">http://localhost/participant/leaderboard/[hackathon-id]</div>
+              <p>Your row is highlighted in blue. You'll see your rank, score, and percentile (e.g., <span class="badge badge-blue">Top 15%</span>). Top 3 get 🥇🥈🥉 icons.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ── ARCHITECTURE ── -->
+      <section id="architecture">
+        <h2>🏗️ Architecture — How the Pieces Connect</h2>
+
+        <p>Here's a simplified view of how the 7 services communicate:</p>
+
+        <div class="diagram">
+          <div style="text-align:center;margin-bottom:16px">
+            <span class="d-box">Your Browser</span>
+            <span class="d-arrow">→</span>
+            <span class="d-box d-blue">Nginx (Port 80)</span>
+          </div>
+          <div style="text-align:center;margin-bottom:8px">
+            <span style="color:var(--text-dimmer)">↙ /api/* routes here &nbsp;&nbsp;&nbsp; ↘ /* routes here</span>
+          </div>
+          <div style="text-align:center;margin-bottom:16px">
+            <span class="d-box d-blue">FastAPI Backend</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="d-box">Next.js Frontend</span>
+          </div>
+          <div style="text-align:center;margin-bottom:8px">
+            <span style="color:var(--text-dimmer)">Backend connects to:</span>
+          </div>
+          <div style="text-align:center;margin-bottom:16px">
+            <span class="d-box d-green">PostgreSQL</span>
+            <span class="d-arrow"> &amp; </span>
+            <span class="d-box d-yellow">Redis</span>
+          </div>
+          <div style="text-align:center;margin-bottom:8px">
+            <span style="color:var(--text-dimmer)">Redis queue sends jobs to:</span>
+          </div>
+          <div style="text-align:center;margin-bottom:16px">
+            <span class="d-box d-purple">ARQ Worker</span>
+          </div>
+          <div style="text-align:center;margin-bottom:8px">
+            <span style="color:var(--text-dimmer)">Worker calls:</span>
+          </div>
+          <div style="text-align:center">
+            <span class="d-box d-purple">Ollama (AI Models)</span>
+            <span class="d-arrow"> and </span>
+            <span class="d-box d-green">PostgreSQL</span>
+          </div>
+        </div>
+
+        <h3>The Evaluation Flow in Detail</h3>
+
+        <ol>
+          <li>You click "Submit" in the browser</li>
+          <li>Browser sends request to <strong>FastAPI</strong> → creates a submission record in <strong>PostgreSQL</strong></li>
+          <li>FastAPI drops a job message into <strong>Redis</strong> ("evaluate submission X")</li>
+          <li>FastAPI immediately returns "Submitted! ✓" to the browser — it doesn't wait for the AI</li>
+          <li>The browser opens an SSE connection to poll for updates</li>
+          <li>The <strong>ARQ Worker</strong> picks up the job from Redis</li>
+          <li>Worker runs the <strong>LangGraph pipeline</strong>: clone → analyze → AI agents → score</li>
+          <li>Worker calls <strong>Ollama</strong> (AI models) 3 times, one per agent</li>
+          <li>Worker saves all results to <strong>PostgreSQL</strong></li>
+          <li>FastAPI detects the completed status → SSE sends "completed" event to browser</li>
+          <li>Browser shows the evaluation report</li>
+        </ol>
+
+        <div class="callout info">
+          <div class="callout-icon">💡</div>
+          <div class="callout-body">
+            <strong>Why a separate Worker?</strong>
+            <p>AI evaluation takes 2–4 minutes. If the backend waited during that time, you couldn't use the website at all. By using a separate worker with a queue, the website stays fast and responsive while evaluations happen in the background.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── AI AGENTS ── -->
+      <section id="ai-agents">
+        <h2>🤖 AI Agents Explained</h2>
+
+        <p>EVALON uses 3 specialized AI personas, each with a different job:</p>
+
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--blue-light)">Agent 1: Repository Understanding Agent</h3>
+          <p><strong>Persona:</strong> "I'm a tech journalist reviewing this project."</p>
+          <p><strong>It asks:</strong> What problem does this solve? Who is it for? Is the purpose explained clearly in the README? Does the file structure make sense?</p>
+          <p><strong>Input:</strong> README content, file tree, dependency list</p>
+          <p><strong>Output:</strong> Score 0–10 + evidence about documentation quality</p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--green)">Agent 2: Code Quality Agent</h3>
+          <p><strong>Persona:</strong> "I'm a senior engineer doing a code review."</p>
+          <p><strong>Important:</strong> This agent does NOT guess at code quality. It receives the actual numbers from static analysis tools, then interprets them:</p>
+          <ul>
+            <li><strong>radon</strong> measures: cyclomatic complexity (how tangled the code is), maintainability index</li>
+            <li><strong>ESLint</strong> measures: JavaScript/TypeScript style violations</li>
+            <li><strong>semgrep</strong> finds: security vulnerabilities, bad patterns</li>
+          </ul>
+          <p>The AI then says "12 functions have complexity > 10, which indicates potential for bugs" — based on real numbers, not guesses.</p>
+          <p><strong>Output:</strong> Score 0–10 + list of specific findings with file references</p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0;color:var(--purple)">Agent 3: Innovation Agent</h3>
+          <p><strong>Persona:</strong> "I'm a VC evaluating whether this is worth funding."</p>
+          <p><strong>It asks:</strong> Is this problem interesting? Is the solution creative or just a tutorial clone? Does it use interesting technology? Does it feel complete?</p>
+          <p><strong>Calibration:</strong> The agent is explicitly told: "A score of 5 = a competent but boring CRUD app. 7+ = genuine creativity. 9+ = something that would impress a senior engineer."</p>
+          <p><strong>Output:</strong> Score 0–10 + reasoning about novelty and sophistication</p>
+        </div>
+
+        <h3>How scores become the final grade</h3>
+
+        <p>With the default hackathon criteria (Code Quality 40%, Innovation 35%, Project Understanding 25%):</p>
+
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">Score calculation example</span></div>
+          <pre><span class="comment"># Agent scores (example):</span>
+repo_understanding_score = 8.0
+code_quality_score       = 6.5
+innovation_score         = 7.2
+
+<span class="comment"># Weighted average:</span>
+final = (8.0 × 0.25) + (6.5 × 0.40) + (7.2 × 0.35)
+final = 2.0  +  2.6  +  2.52
+final = 7.12  <span class="comment"># → Grade: B+</span></pre>
+        </div>
+      </section>
+
+      <!-- ── TROUBLESHOOTING ── -->
+      <section id="troubleshoot">
+        <h2>🔧 Troubleshooting Common Issues</h2>
+
+        <h3>Problem: "make up" fails or containers don't start</h3>
+        <div class="callout danger">
+          <div class="callout-icon">❌</div>
+          <div class="callout-body">
+            <strong>Symptom</strong>
+            <p>You see error messages when running <code>make up</code>, or some containers show "Exit" status.</p>
+          </div>
+        </div>
+        <p><strong>Solution:</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose logs --tail=50')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose logs --tail=50</span>
+<span class="comment"># Read the error messages to see which container failed and why</span></pre>
+        </div>
+        <p>Most common cause: Docker Desktop doesn't have enough memory. Go to Docker Desktop → Settings → Resources → Memory → set to 8 GB.</p>
+
+        <h3>Problem: Ollama models take forever / evaluation never starts</h3>
+        <div class="callout warning">
+          <div class="callout-icon">⏳</div>
+          <div class="callout-body">
+            <strong>Symptom</strong>
+            <p>You submitted a repo but it stays on "pending" for more than 5 minutes.</p>
+          </div>
+        </div>
+        <p><strong>Check if Ollama is still downloading:</strong></p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose logs ollama --tail=30')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose logs ollama --tail=30</span>
+<span class="comment"># Look for "pulling..." messages — models are still downloading</span>
+<span class="comment"># This is normal on first run, wait for it to complete</span></pre>
+        </div>
+
+        <h3>Problem: Health check shows Ollama as "unhealthy"</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose logs ollama | grep pulling')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose logs ollama | grep -E "pulling|success|error"</span></pre>
+        </div>
+        <p>If models haven't been pulled yet, run:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose exec ollama ollama pull nomic-embed-text')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose exec ollama ollama pull nomic-embed-text</span>
+<span class="cmd">docker compose exec ollama ollama pull qwen2.5:7b</span>
+<span class="cmd">docker compose exec ollama ollama pull qwen2.5-coder:7b</span></pre>
+        </div>
+
+        <h3>Problem: "make" command not found (Windows)</h3>
+        <p>On Windows, use the Docker commands directly instead:</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-label">Instead of make commands, use:</span></div>
+          <pre><span class="comment"># Instead of: make up</span>
+<span class="cmd">docker compose up -d</span>
+
+<span class="comment"># Instead of: make migrate</span>
+<span class="cmd">docker compose exec backend alembic upgrade head</span>
+
+<span class="comment"># Instead of: make seed</span>
+<span class="cmd">docker compose exec backend python -m app.scripts.seed</span>
+
+<span class="comment"># Instead of: make logs</span>
+<span class="cmd">docker compose logs -f</span></pre>
+        </div>
+
+        <h3>Problem: Frontend shows "502 Bad Gateway"</h3>
+        <p>The backend isn't ready yet. Wait 30 seconds and refresh. If it persists:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose logs backend --tail=20')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose logs backend --tail=20</span></pre>
+        </div>
+
+        <h3>Problem: Want to start fresh (reset everything)</h3>
+        <div class="callout danger">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-body">
+            <strong>This deletes all data</strong>
+            <p>The command below removes all containers AND all stored data (users, hackathons, evaluations). Ollama models are kept to avoid re-downloading.</p>
+          </div>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal — nuclear reset</span>
+            <button class="copy-btn" onclick="copyCode(this, 'docker compose down -v\ndocker compose up -d\nmake migrate\nmake seed')">Copy</button>
+          </div>
+          <pre><span class="cmd">docker compose down -v</span>  <span class="comment"># stops everything and deletes data volumes</span>
+<span class="cmd">docker compose up -d</span>    <span class="comment"># start fresh</span>
+<span class="cmd">make migrate</span>             <span class="comment"># recreate database tables</span>
+<span class="cmd">make seed</span>                <span class="comment"># recreate demo accounts</span></pre>
+        </div>
+
+        <h3>Useful monitoring commands</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-label">Terminal — helpful commands</span>
+          </div>
+          <pre><span class="comment"># See what's running</span>
+<span class="cmd">docker compose ps</span>
+
+<span class="comment"># Follow all logs live</span>
+<span class="cmd">make logs</span>
+
+<span class="comment"># Follow only the worker (where evaluations happen)</span>
+<span class="cmd">docker compose logs -f worker</span>
+
+<span class="comment"># Check job queue status (requires login)</span>
+<span class="comment"># GET http://localhost/api/v1/admin/queue/status</span>
+
+<span class="comment"># Open a shell inside the backend container</span>
+<span class="cmd">make shell</span>
+
+<span class="comment"># Stop everything (data is preserved)</span>
+<span class="cmd">make down</span></pre>
+        </div>
+      </section>
+
+      <hr class="divider">
+
+      <!-- ── QUICK REFERENCE ── -->
+      <section id="quick-ref">
+        <h2>📋 Quick Reference Card</h2>
+
+        <div class="card">
+          <h3 style="margin-top:0">One-Time Setup</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">Run these commands once, in order</span>
+              <button class="copy-btn" onclick="copyCode(this, 'cd /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine\ncp .env.example .env\n# Edit .env: change SECRET_KEY\nmake up\n# Wait 10-20 min for models to download\nmake migrate\nmake seed')">Copy All</button>
+            </div>
+            <pre><span class="cmd">cd</span> /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine
+<span class="cmd">cp</span> .env.example .env
+<span class="comment"># Edit .env: change SECRET_KEY on line 12</span>
+<span class="cmd">make up</span>
+<span class="comment"># ⏳ Wait 10–20 minutes for AI models to download (first time only)</span>
+<span class="cmd">make migrate</span>
+<span class="cmd">make seed</span>
+<span class="comment"># ✅ Open http://localhost</span></pre>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Every Day After That</h3>
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-label">Just two commands to start</span>
+              <button class="copy-btn" onclick="copyCode(this, 'cd /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine\nmake up')">Copy</button>
+            </div>
+            <pre><span class="cmd">cd</span> /Users/arunishrajput/Downloads/Anvil/hackathon-eval-engine
+<span class="cmd">make up</span>
+<span class="comment"># ✅ Ready in ~30 seconds. Go to http://localhost</span></pre>
+          </div>
+        </div>
+
+        <h3>All URLs</h3>
+        <table>
+          <tr><th>URL</th><th>What's there</th></tr>
+          <tr><td><code>http://localhost</code></td><td>Landing page</td></tr>
+          <tr><td><code>http://localhost/auth/login</code></td><td>Login page</td></tr>
+          <tr><td><code>http://localhost/admin</code></td><td>Admin dashboard</td></tr>
+          <tr><td><code>http://localhost/participant</code></td><td>Participant dashboard</td></tr>
+          <tr><td><code>http://localhost/api/docs</code></td><td>Interactive API documentation (Swagger UI)</td></tr>
+          <tr><td><code>http://localhost/api/health</code></td><td>System health check (JSON)</td></tr>
+        </table>
+
+        <h3>Demo Accounts</h3>
+        <table>
+          <tr><th>Role</th><th>Email</th><th>Password</th></tr>
+          <tr>
+            <td><span class="badge badge-purple">Admin</span></td>
+            <td><code>admin@hackeval.dev</code></td>
+            <td><code>admin123</code></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-green">Participant</span></td>
+            <td><code>participant@hackeval.dev</code></td>
+            <td><code>test123</code></td>
+          </tr>
+        </table>
+      </section>
+
+      <div style="text-align:center;padding:40px 0;color:var(--text-dimmer);font-size:14px">
+        Built with EVALON v1.0 · Hackathon Evaluation Engine
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Copy button functionality
+  function copyCode(btn, text) {
+    // If text not provided, get from sibling pre
+    if (!text) {
+      const pre = btn.closest('.code-block').querySelector('pre');
+      text = pre.innerText;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Reading progress bar
+  const main = document.getElementById('main');
+  const progress = document.getElementById('progress');
+  main.addEventListener('scroll', () => {
+    const scrolled = main.scrollTop;
+    const total = main.scrollHeight - main.clientHeight;
+    progress.style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Active nav link highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  main.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (main.scrollTop + 100 >= s.offsetTop) current = s.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Smooth scroll
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
